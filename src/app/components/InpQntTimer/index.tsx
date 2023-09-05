@@ -19,7 +19,7 @@ export default function InpQntTimer({waterDiarie, waterPerTimer ,setWaterPerTime
                 <p className='text-gray-text font-xs font-medium'>{waterPerTimer}ml</p>
             </div>
 
-            <input type="range" min="0" max={maxWaterQnt} step="10" value={waterPerTimer} onChange={ (e) => setWaterPerTimer(parseInt(e.target.value))} />
+            <input  className="outline-none shadow-xl bg-gray-2000 w-auto rounded-md" type="range" min="50" max={maxWaterQnt} step="10" value={waterPerTimer} onChange={ (e) => setWaterPerTimer(parseInt(e.target.value))} />
         </div>
     )
 }

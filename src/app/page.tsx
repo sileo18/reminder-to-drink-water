@@ -41,7 +41,7 @@ export default function Home() {
             <InpQntTimer waterPerTimer={waterPerTimer} waterDiarie={waterDiarie} setWaterPerTimer={setWaterPerTimer} />
 
             {/* Timer */}
-            <Timer timerStart={timerStart} waterDiarie={waterDiarie} waterPerTimer={waterPerTimer} />
+            <Timer setTimerStart={setTimerStart} timerStart={timerStart} waterDiarie={waterDiarie} waterPerTimer={waterPerTimer} />
 
             {/* Button Start */}
             <BtnStart timerStart={timerStart} setTimerStart={setTimerStart}/>

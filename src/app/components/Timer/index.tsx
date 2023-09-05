@@ -1,14 +1,16 @@
 import UseTimer from "@/hooks/UseTimer"
+import { Dispatch, SetStateAction } from "react"
 
 interface props {
     waterDiarie: number,
     waterPerTimer: number,
-    timerStart: boolean
+    timerStart: boolean,
+    setTimerStart: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Timer({ waterDiarie, waterPerTimer, timerStart }: props) {
+export default function Timer({ waterDiarie, waterPerTimer, timerStart, setTimerStart }: props) {
 
-    const { hoursString, minutesString } = UseTimer(waterPerTimer, waterDiarie, timerStart)    
+    const { hoursString, minutesString } = UseTimer(waterPerTimer, waterDiarie, timerStart, setTimerStart)    
 
     return (
         <div className='flex gap-5 items-center justify-center'>

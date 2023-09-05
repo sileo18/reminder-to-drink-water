@@ -17,7 +17,7 @@ export default function InputDia({data, setData}: InputProps) {
                 <p className='text-gray-text font-xs'>{data}ml</p>
             </div>
 
-            <input type="range" min="0" max="3000" step="50" value={data} onChange={ (e) => setData(parseInt(e.target.value))} />
+            <input className="outline-none shadow-xl bg-gray-2000 w-auto rounded-md" type="range" min="50" max="3000" step="50" value={data} onChange={ (e) => setData(parseInt(e.target.value))} />
         </div>
     )
 }
