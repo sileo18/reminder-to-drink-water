@@ -1,29 +1,36 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
-export default function UseTimer(qntWaterPerTimer: number, qntWaterTotal: number, timerStart: boolean, setTimerStart: Dispatch<SetStateAction<boolean>>) {
-    
-    const minutesWakeUp = 16 * 60;
-    const [minutesAmount, setMinutesAmount] = useState(minutesWakeUp);
+export default function UseTimer(isDone: boolean, setIsDone:Dispatch<SetStateAction<boolean>>,  WaterPerTimer?: number, WaterTotal?: number, timerStart?: boolean, setTimerStart?: Dispatch<SetStateAction<boolean>>) {
+
+    const INITIAL_TIME_IN_SECONDS = 16 * 60 * 60;
+
+    const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_TIME_IN_SECONDS);
+
+    console.log(setTimerStart)
 
     useEffect(() => {
-        let timer: any;
+        let timer: NodeJS.Timeout | null = null;
 
-        if (timerStart && minutesAmount > 0) {
-            timer = setInterval(() => {
-                setMinutesAmount((prevMinutes) => prevMinutes - 1);
-            }, 1000 * 60);
-        }
+        const tick = () => {
+            if (timerStart === true && remainingSeconds > 0) {
+                setRemainingSeconds((prevSeconds) => prevSeconds - 1);
+                timer = setTimeout(tick, 1000);
+            }
+        };
 
-        return () => clearInterval(timer);
-    }, [timerStart, minutesAmount]);
+        tick(); // Inicia o timer
 
-    const timesPersonNeedDrink = qntWaterTotal / qntWaterPerTimer;
-    const intervalMinutes = minutesAmount / timesPersonNeedDrink;
-    const hours = Math.floor(intervalMinutes / 60);
-    const minutes = Math.floor(intervalMinutes % 60);
+        return () => {
+            if (timer) {
+                clearTimeout(timer);
+                isDone = true
+            }
+        };
+    }, [remainingSeconds, timerStart]);
 
-    const hoursString = (qntWaterPerTimer <= 0 || qntWaterTotal <= 0) ? '00' : hours.toString().padStart(2, '0');
-    const minutesString = (qntWaterPerTimer <= 0 || qntWaterTotal <= 0) ? '00' : minutes.toString().padStart(2, '0');
+    // Calcula as horas e minutos com base no tempo restante total em segundos
+    const hours = Math.floor(remainingSeconds / 3600);
+    const minutes = Math.floor((remainingSeconds % 3600) / 60);
 
-    return { hoursString, minutesString, timesPersonNeedDrink };
+    return { hours, minutes, isDone, setIsDone };
 }

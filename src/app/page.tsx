@@ -7,6 +7,8 @@ import InpQntTimer from './components/InpQntTimer'
 import Timer from './components/Timer'
 import BtnStart from './components/Btn'
 import { useState } from 'react'
+import Reminder from './components/Reminder'
+import UseTimer from '@/hooks/UseTimer'
 
 export default function Home() {
 
@@ -16,8 +18,12 @@ export default function Home() {
 
   const [timerStart, setTimerStart] = useState(false)
 
+  const [isDone, setIsDone] = useState(true)
+
+  UseTimer(isDone, setIsDone)
+
   return (
-    <main className='flex min-h-screen justify-center items-center bg-gray-950'>
+    <main className='flex min-h-screen justify-center items-center bg-gray-950 relative'>
 
       <div className='w-[630px] h-[489px] flex flex-col justify-start items-start gap-20'>
 
@@ -50,6 +56,8 @@ export default function Home() {
         </div>
 
       </div>
+
+      { isDone && <Reminder setIsDone={setIsDone} /> }
 
     </main>
   )
